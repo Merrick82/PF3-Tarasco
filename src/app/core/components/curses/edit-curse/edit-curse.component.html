@@ -1,0 +1,25 @@
+<h1 mat-dialog-title class="title">Editar Estudiante</h1>
+<div mat-dialog-content>
+    <form [formGroup]="form" (ngSubmit)="save()">
+        <mat-form-field appearance="fill" class="spaces">
+            <mat-label>Curso</mat-label>
+            <input formControlName="title" matInput>
+            <mat-error class="error" *ngIf="errorHandling('title', 'required')">Campo requerido</mat-error>
+            <mat-error class="error" *ngIf="errorHandling('title', 'maxlength')">Hasta 25 caracteres</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="spaces">
+            <mat-label>Profesor</mat-label>
+            <input formControlName="professor" matInput>
+            <mat-error class="error" *ngIf="errorHandling('professor', 'required')">Campo requerido</mat-error>
+            <mat-error class="error" *ngIf="errorHandling('professor', 'maxlength')">Hasta 40 caracteres</mat-error>
+        </mat-form-field>
+
+        <mat-slide-toggle formControlName="active" class="spaces">Activo</mat-slide-toggle>
+
+        <div align="center" style="padding-top: 15px;">
+            <button mat-button class="close" (click)="close()">Cerrar</button>
+            <button mat-button class="save">Grabar</button>
+        </div>
+    </form>
+</div>

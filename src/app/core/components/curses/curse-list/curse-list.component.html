@@ -1,0 +1,48 @@
+<div class="container" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+    <p>Cargando...</p>
+</div>
+
+
+<div class="container" *ngIf="!loading">
+    <h2 class="title-page">Cursos</h2>
+
+    <table mat-table [dataSource]="curses$" class="mat-elevation-z8">
+        <ng-container matColumnDef="curso">
+            <th mat-header-cell *matHeaderCellDef class="header-table" appCustomDirective>Curso</th>
+            <td mat-cell *matCellDef="let element" class="column-table">{{ element.title | transform: element.title }}</td>
+        </ng-container>
+    
+        <ng-container matColumnDef="profesor">
+            <th mat-header-cell *matHeaderCellDef class="header-table" appCustomDirective>Profesor</th>
+            <td mat-cell *matCellDef="let element" style="text-align: center;">{{ element.professor }}</td>
+        </ng-container>
+        
+        <ng-container matColumnDef="activo">
+            <th mat-header-cell *matHeaderCellDef class="header-table" appCustomDirective>Activo</th>
+            <td mat-cell *matCellDef="let element" style="text-align: center;">
+                <mat-icon *ngIf="element.active" style="color: green;">check_circle</mat-icon>
+                <mat-icon *ngIf="!element.active" style="color: red;">remove_circle</mat-icon>
+            </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef class="header-table" appCustomDirective>Acciones</th>
+            <td mat-cell *matCellDef="let element" style="text-align: right; padding-left: 15px;">
+                <button mat-icon-button (click)="editCurse(element)">
+                    <mat-icon style="color: #004a9f;">edit</mat-icon>
+                </button>
+                <button mat-icon-button (click)="deleteCurse(element)">
+                    <mat-icon style="color: red;">delete</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+        <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+    </table>
+
+    <div class="add">
+        <button type="button"  class="btn btn-primary" (click)="addCurse()">Agregar Curso</button>
+    </div>
+</div>
