@@ -1,10 +1,9 @@
-<div class="container" *ngIf="loading">
+<div class="container" *ngIf="(loading$ | async)">
     <mat-spinner></mat-spinner>
     <p>Cargando...</p>
 </div>
 
-
-<div class="container" *ngIf="!loading">
+<div class="container" *ngIf="!(loading$ | async)">
     <h2 class="title-page">Cursos</h2>
 
     <table mat-table [dataSource]="curses$" class="mat-elevation-z8">

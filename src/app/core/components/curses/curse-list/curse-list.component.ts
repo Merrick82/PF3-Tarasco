@@ -1,31 +1,41 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Curse } from '../../../../models/curse';
 import { AddCurseComponent } from '../add-curse/add-curse.component';
 import { EditCurseComponent } from '../edit-curse/edit-curse.component';
 import { CursesService } from '../../../../services/curses.service'; 
+import { CurseState } from 'src/app/core/state/curses.reducer';
+import { Store } from '@ngrx/store';
+import { cargarCurses, cursesCargados } from 'src/app/core/state/curses.actions';
+import { selectCargandoState, selectCursosCargadosState } from 'src/app/core/state/curses.selectors';
 
 @Component({
   selector: 'app-curse-list',
   templateUrl: './curse-list.component.html',
   styleUrls: ['./curse-list.component.css']
 })
-export class CurseListComponent implements OnInit, OnDestroy {
-  public loading: boolean = true;
+export class CurseListComponent implements OnInit {
   public columns: string[] = ['curso', 'profesor', 'activo', 'acciones'];
   public curses$!: Observable<Curse[]>;
+  public loading$!: Observable<boolean>;
   
   @ViewChild(MatTable) table!: MatTable<Curse>;
-  constructor(private dialog: MatDialog, private curseService: CursesService) {}
+  constructor(private dialog: MatDialog, private curseService: CursesService,
+    private store: Store<CurseState>
+    ) {}
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.curses$ = this.curseService.getCurses();  
-      this.loading = false;
-    }, 5000);
-    //this.curses$ = this.curseService.getCurses();
+    this.store.dispatch(cargarCurses());
+    this.curseService.getCurses().subscribe((cursesFounded) => {
+      this.store.dispatch(cursesCargados({
+        curses: cursesFounded
+      }));
+    });
+
+    this.loading$ = this.store.select(selectCargandoState);
+    this.curses$ = this.store.select(selectCursosCargadosState);
   }
 
   public addCurse() {
@@ -76,9 +86,5 @@ export class CurseListComponent implements OnInit, OnDestroy {
         this.ngOnInit();
       }
     });
-  }
-
-  ngOnDestroy(): void {
-    this.loading = true;
   }
 }

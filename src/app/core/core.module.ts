@@ -14,7 +14,9 @@ import { SharedModule } from '../shared/shared.module';
 import { StudentsService } from '../services/students.service';
 import { CursesService } from '../services/curses.service';
 import { AuthGuard } from '../shared/guard/auth.guard';
-
+import { StoreModule } from '@ngrx/store';
+import * as fromCurses from './state/curses.reducer';
+import * as fromStudents from './state/students.reducer';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { AuthGuard } from '../shared/guard/auth.guard';
   ],
   imports: [
     CoreRoutingModule,
-    SharedModule
+    SharedModule,
+    StoreModule.forFeature(fromCurses.cursesFeatureKey, fromCurses.reducer),
+    StoreModule.forFeature(fromStudents.studentsFeatureKey, fromStudents.reducer)
   ],
   providers: [
     StudentsService,

@@ -6,6 +6,10 @@ import { Student } from 'src/app/models/student';
 import { AddStudentComponent } from '../add-student/add-student.component';
 import { EditStudentComponent } from '../edit-student/edit-student.component';
 import { StudentsService } from '../../../../services/students.service';
+import { StudentState } from 'src/app/core/state/students.reducer';
+import { Store } from '@ngrx/store';
+import { cargarStudents, studentsCargados } from 'src/app/core/state/students.actions';
+import { selectCargandoState, selectEstudiantesCargadosState } from 'src/app/core/state/students.selectors';
 
 @Component({
   selector: 'app-student-list',
@@ -15,12 +19,24 @@ import { StudentsService } from '../../../../services/students.service';
 export class StudentListComponent implements OnInit {
   public columns: string[] = ['nombre', 'promedio', 'cursando', 'acciones'];
   public students$!: Observable<Student[]>;
+  public loading$!: Observable<boolean>;
 
   @ViewChild(MatTable) table!: MatTable<Student>;
-  constructor(private dialog: MatDialog, private studentService: StudentsService) { }
+  constructor(private dialog: MatDialog, private studentService: StudentsService,
+    private store: Store<StudentState>) { }
     
   ngOnInit(): void {
-    this.students$ = this.studentService.getStudents();
+    this.store.dispatch(cargarStudents());
+    this.studentService.getStudents().subscribe((studentsFounded) => {
+      this.store.dispatch(studentsCargados({
+        students: studentsFounded
+      }));
+    });
+
+    this.loading$ = this.store.select(selectCargandoState);
+    this.students$ = this.store.select(selectEstudiantesCargadosState);
+    
+    //this.students$ = this.studentService.getStudents();
   }
 
   public addStudent() {

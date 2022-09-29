@@ -105,5 +105,10 @@
       }
     }
   },
-  "defaultProject": "PF3-Tarasco"
+  "defaultProject": "PF3-Tarasco",
+  "cli": {
+    "schematicCollections": [
+      "@ngrx/schematics"
+    ]
+  }
 }
