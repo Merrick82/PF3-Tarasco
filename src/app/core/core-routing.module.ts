@@ -4,6 +4,7 @@ import { AuthGuard } from '../shared/guard/auth.guard';
 import { CurseListComponent } from './components/curses/curse-list/curse-list.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { InitComponent } from './components/init/init.component';
+import { InscriptionListComponent } from './components/inscriptions/inscription-list/inscription-list.component';
 import { StudentListComponent } from './components/students/student-list/student-list.component';
 import { UnderConstructComponent } from './components/under-construct/under-construct.component';
 
@@ -13,6 +14,7 @@ const routes: Routes = [
       { path: 'inicio', component: InitComponent },
       { path: 'curses-list', canActivate: [AuthGuard], component: CurseListComponent },
       { path: 'students-list', canActivate: [AuthGuard], component: StudentListComponent },
+      { path: 'inscriptions-list', canActivate: [AuthGuard], component: InscriptionListComponent },
       { path: 'under-construct', component: UnderConstructComponent }
     ] 
   },

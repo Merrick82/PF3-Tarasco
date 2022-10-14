@@ -17,6 +17,10 @@ import { AuthGuard } from '../shared/guard/auth.guard';
 import { StoreModule } from '@ngrx/store';
 import * as fromCurses from './state/curses.reducer';
 import * as fromStudents from './state/students.reducer';
+import * as fromInscriptions from './state/inscriptions.reducer';
+import { InscriptionListComponent } from './components/inscriptions/inscription-list/inscription-list.component';
+import { AddInscriptionComponent } from './components/inscriptions/add-inscription/add-inscription.component';
+import { EditInscriptionComponent } from './components/inscriptions/edit-inscription/edit-inscription.component';
 
 @NgModule({
   declarations: [
@@ -28,13 +32,17 @@ import * as fromStudents from './state/students.reducer';
     EditStudentComponent,
     CurseListComponent,
     AddCurseComponent,
-    EditCurseComponent
+    EditCurseComponent,
+    InscriptionListComponent,
+    AddInscriptionComponent,
+    EditInscriptionComponent
   ],
   imports: [
     CoreRoutingModule,
     SharedModule,
     StoreModule.forFeature(fromCurses.cursesFeatureKey, fromCurses.reducer),
-    StoreModule.forFeature(fromStudents.studentsFeatureKey, fromStudents.reducer)
+    StoreModule.forFeature(fromStudents.studentsFeatureKey, fromStudents.reducer),
+    StoreModule.forFeature(fromInscriptions.inscriptionsFeatureKey, fromInscriptions.reducer)
   ],
   providers: [
     StudentsService,

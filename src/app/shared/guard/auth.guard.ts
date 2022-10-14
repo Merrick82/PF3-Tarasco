@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
             this.session = session;
         });
 
-        if (this.session.activeSession && this.session.user?.admin) {
+        if (this.session.activeSession) {
             return true;
         } else {
             alert('No tiene permiso para acceder a este recurso!');

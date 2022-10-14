@@ -1,0 +1,25 @@
+.title {
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.spaces {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.close {
+    background: red;
+    color: white;
+    margin-right: 5px;
+}
+
+.save {
+    background: green;
+    color: white;
+    margin-left: 5px;
+}
+
+.error {
+    padding-bottom: 5px;
+}

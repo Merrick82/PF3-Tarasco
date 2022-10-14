@@ -16,7 +16,7 @@ export class InitComponent implements OnInit {
     this.cards = [
       { id: 1, title: 'Alumnos', path: 'students-list' },
       { id: 2, title: 'Cursos', path: 'curses-list' },
-      { id: 3, title: 'Inscripciones', path: 'under-construct' }
+      { id: 3, title: 'Inscripciones', path: 'inscriptions-list' }
     ];
   }
 
